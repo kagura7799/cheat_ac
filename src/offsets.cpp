@@ -31,6 +31,7 @@ std::map<std::string, std::map<std::string, uintptr_t>> playerOffsets = {
     {"miscellaneous", {
         {"name", 0x205},
         {"hp", 0xec},
+        {"armor", 0xF0},
         {"is_onground", 0x5d},
         {"is_shooting", 0x204},
     }},

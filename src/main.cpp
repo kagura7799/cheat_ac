@@ -5,4 +5,6 @@
 
 int main() {
     std::cout << "========= ASSAULT CUBE CHEAT =========" << std::endl;
+    Cheat cheat;
+    cheat.godMode();
 }
