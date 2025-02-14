@@ -1,7 +1,7 @@
 #include "../include/cheat.hpp"
 
-void Cheat::godMode() {
-    memory.setPlayerAmmo(414);
-    memory.setPlayerHp(414);    
-    memory.setPlayerArmor(414);    
+void Cheat::godMode(int hp, int armor, int ammo) {
+    memory.setPlayerAmmo(ammo);
+    memory.setPlayerHp(hp);    
+    memory.setPlayerArmor(armor);    
 }    

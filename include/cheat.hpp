@@ -10,5 +10,5 @@ class Cheat {
 public:
     Memory memory;
 
-    void godMode();
+    void godMode(int hp, int armor, int ammo);
 };
