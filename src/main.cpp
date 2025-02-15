@@ -7,6 +7,16 @@
 
 #include "../include/cheat.hpp"
 
+const std::string reset = "\033[0m";         
+const std::string black = "\033[30m";        
+const std::string red = "\033[31m";          
+const std::string green = "\033[32m";        
+const std::string yellow = "\033[33m";       
+const std::string blue = "\033[34m";         
+const std::string purple = "\033[35m";       
+const std::string cyan = "\033[36m";         
+const std::string white = "\033[37m";        
+
 void SetCursorPosition(int x, int y) {
     COORD coord = {x, y};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
@@ -30,18 +40,22 @@ std::map<std::string, bool> cheatStatus {
 
 void drawMenu() {
     SetCursorPosition(0, 4);
-    std::cout << "========= ASSAULT CUBE CHEAT =========" << std::endl;
+    std::cout << red << "========= ASSAULT CUBE CHEAT =========" << reset << std::endl;
     std::cout << "(by \"414 kagura\")" << std::endl;
+    std::cout << "\n";
     std::cout << "[!] Exit - ESC " << std::endl;
-    std::cout << "DISABLE GRAVITY - ALT + F1" << std::endl;
-    std::cout << "GOD MODE - ALT + F2" << std::endl;
-    std::cout << "DISABLE RECOIL - ALT + F3" << std::endl;
+    std::cout << "\n";
+    std::cout << "DISABLE GRAVITY - F1" << std::endl;
+    std::cout << "DISABLE RECOIL - F2" << std::endl;
+    std::cout << "GOD MODE - F3" << std::endl;
     std::cout << std::endl;
 
     for (const auto& [cheat, status] : cheatStatus) {
+        std::cout << red << std::endl;
         std::cout << "------------------------------" << std::endl;
         std::cout << (status ? "[+]" : "[]") << " " << cheat << std::endl;
         std::cout << "------------------------------" << std::endl;
+        std::cout << reset << std::endl;
     }
 }
 
@@ -78,7 +92,7 @@ void handleKeyPresses(Cheat& cheat) {
     while (true) {
         drawMenu();
 
-        if ((GetAsyncKeyState(VK_MENU) & 0x8000) && (GetAsyncKeyState(VK_F1) & 0x8000)) {
+        if (GetAsyncKeyState(VK_F1) & 0x8000) {
             cheatStatus["Disable Gravity"] = !cheatStatus["Disable Gravity"];
 
             if (cheatStatus["Disable Gravity"]) {
@@ -89,18 +103,7 @@ void handleKeyPresses(Cheat& cheat) {
             }
         }
 
-        if ((GetAsyncKeyState(VK_MENU) & 0x8000) && (GetAsyncKeyState(VK_F2) & 0x8000)) {
-            cheatStatus["GodMode"] = !cheatStatus["GodMode"];
-
-            if (cheatStatus["GodMode"]) {
-                godModeActive = true;
-                std::thread(godModeLoop, std::ref(cheat)).detach();
-            } else {
-                godModeActive = false;
-            }
-        }
-
-        if ((GetAsyncKeyState(VK_MENU) & 0x8000) && (GetAsyncKeyState(VK_F3) & 0x8000)) {
+        if (GetAsyncKeyState(VK_F2) & 0x8000) {
             cheatStatus["Disable Recoil"] = !cheatStatus["Disable Recoil"];
 
             if (cheatStatus["Disable Recoil"]) {
@@ -108,6 +111,17 @@ void handleKeyPresses(Cheat& cheat) {
                 std::thread(recoilLoop, std::ref(cheat)).detach();
             } else {
                 recoilActive = false;
+            }
+        }
+
+        if (GetAsyncKeyState(VK_F3) & 0x8000) {
+            cheatStatus["GodMode"] = !cheatStatus["GodMode"];
+
+            if (cheatStatus["GodMode"]) {
+                godModeActive = true;
+                std::thread(godModeLoop, std::ref(cheat)).detach();
+            } else {
+                godModeActive = false;
             }
         }
 
