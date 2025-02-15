@@ -22,7 +22,9 @@ private:
         
 public:
     Memory();
+
     void setPlayerAmmo(int value);
     void setPlayerHp(int value);
     void setPlayerArmor(int value);
+    void setGravity(bool value); 
 };

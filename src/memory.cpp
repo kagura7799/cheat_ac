@@ -43,7 +43,7 @@ Memory::Memory() {
 
 void Memory::setPlayerAmmo(int value) {
     for (const auto& offset : *weaponOffsets)
-            WriteProcessMemory(hProcess, (LPVOID)(playerBase + offset.second), &value, sizeof(int), NULL);
+        WriteProcessMemory(hProcess, (LPVOID)(playerBase + offset.second), &value, sizeof(int), NULL);
 }
 
 void Memory::setPlayerHp(int value) {
@@ -54,6 +54,6 @@ void Memory::setPlayerArmor(int value) {
     WriteProcessMemory(hProcess, (LPVOID)(playerBase + miscellaneousOffsets->at("armor")), &value, sizeof(int), NULL);
 }
 
-
-
-        
+void Memory::setGravity(bool value) {
+    WriteProcessMemory(hProcess, (LPVOID)(playerBase + miscellaneousOffsets->at("is_onground")), &value, sizeof(bool), NULL);
+}

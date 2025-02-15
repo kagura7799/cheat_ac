@@ -11,4 +11,5 @@ public:
     Memory memory;
 
     void godMode(int hp, int armor, int ammo);
+    void setGravity(bool value);
 };
