@@ -12,4 +12,5 @@ public:
 
     void godMode(int hp, int armor, int ammo);
     void setGravity(bool value);
+    void setRecoil(bool value);
 };

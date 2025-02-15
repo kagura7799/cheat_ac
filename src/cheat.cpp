@@ -9,3 +9,7 @@ void Cheat::godMode(int hp, int armor, int ammo) {
 void Cheat::setGravity(bool value) {
     memory.setGravity(value);
 }
+
+void Cheat::setRecoil(bool value) {
+    memory.setRecoil(value);
+}

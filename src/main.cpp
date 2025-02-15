@@ -14,15 +14,18 @@ void SetCursorPosition(int x, int y) {
 
 std::atomic<bool> godModeActive(false);
 std::atomic<bool> gravityActive(false);
+std::atomic<bool> recoilActive(false);
 
 std::map<std::string, bool> cheatTypes {
     {"GodMode", true},          
     {"Disable Gravity", true},  
+    {"Disable Recoil", true},  
 };
 
 std::map<std::string, bool> cheatStatus {
     {"GodMode", false},
     {"Disable Gravity", false},
+    {"Disable Recoil", false},
 };
 
 void drawMenu() {
@@ -32,6 +35,7 @@ void drawMenu() {
     std::cout << "[!] Exit - ESC " << std::endl;
     std::cout << "DISABLE GRAVITY - ALT + F1" << std::endl;
     std::cout << "GOD MODE - ALT + F2" << std::endl;
+    std::cout << "DISABLE RECOIL - ALT + F3" << std::endl;
     std::cout << std::endl;
 
     for (const auto& [cheat, status] : cheatStatus) {
@@ -57,6 +61,15 @@ void gravityLoop(Cheat& cheat) {
     }
 
     cheat.setGravity(false);
+}
+
+void recoilLoop(Cheat& cheat) {
+    while (recoilActive) {
+        cheat.setRecoil(true);
+        Sleep(100);
+    }
+
+    cheat.setRecoil(false);
 }
 
 void handleKeyPresses(Cheat& cheat) {
@@ -87,9 +100,21 @@ void handleKeyPresses(Cheat& cheat) {
             }
         }
 
+        if ((GetAsyncKeyState(VK_MENU) & 0x8000) && (GetAsyncKeyState(VK_F3) & 0x8000)) {
+            cheatStatus["Disable Recoil"] = !cheatStatus["Disable Recoil"];
+
+            if (cheatStatus["Disable Recoil"]) {
+                recoilActive = true;
+                std::thread(recoilLoop, std::ref(cheat)).detach();
+            } else {
+                recoilActive = false;
+            }
+        }
+
         if (GetAsyncKeyState(VK_ESCAPE) & 0x8000) {
             godModeActive = false;
             gravityActive = false;
+            recoilActive  = false;
             break;
         }
 

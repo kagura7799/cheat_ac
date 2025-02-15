@@ -33,9 +33,7 @@ Memory::Memory() {
     }
     
     baseAddress = getModuleBaseAddress(pid, L"ac_client.exe");
-    
     ReadProcessMemory(hProcess, (LPCVOID)(baseAddress + 0x195404), &playerBase, sizeof(uintptr_t), NULL);
-    std::cout << std::hex << playerBase << std::endl;
 
     weaponOffsets = &playerOffsets["weapon"];
     miscellaneousOffsets = &playerOffsets["miscellaneous"];
@@ -56,4 +54,11 @@ void Memory::setPlayerArmor(int value) {
 
 void Memory::setGravity(bool value) {
     WriteProcessMemory(hProcess, (LPVOID)(playerBase + miscellaneousOffsets->at("is_onground")), &value, sizeof(bool), NULL);
+}
+
+void Memory::setRecoil(bool enable) {
+    uintptr_t INST_CHANGE_VIEWY = 0xC2EC3;
+    std::vector<uint8_t> nopBytes = {0x90, 0x90, 0x90, 0x90, 0x90};
+
+    WriteProcessMemory(hProcess, (LPVOID)(0x400000 + INST_CHANGE_VIEWY), nopBytes.data(), nopBytes.size(), NULL);
 }

@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <TlHelp32.h>
+#include <vector>
 
 #include "../include/offsets.hpp" 
 
@@ -27,4 +28,5 @@ public:
     void setPlayerHp(int value);
     void setPlayerArmor(int value);
     void setGravity(bool value); 
+    void setRecoil(bool value);
 };
