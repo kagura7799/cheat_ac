@@ -14,6 +14,6 @@ void Cheat::setRecoil() {
     memory.setRecoil();
 }
 
-void Cheat::setVallHack(bool active) {
-    memory.setVallHack(active);
+void Cheat::setWallHack(bool active) {
+    memory.setWallHack(active);
 }

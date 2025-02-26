@@ -13,5 +13,5 @@ public:
     void godMode(int hp, int armor, int ammo);
     void setGravity(bool active);
     void setRecoil();
-    void setVallHack(bool active);
+    void setWallHack(bool active);
 };
