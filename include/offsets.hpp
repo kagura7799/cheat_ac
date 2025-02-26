@@ -2,5 +2,7 @@
 
 #include <map>
 #include <string>
+#include <Windows.h>
 
-extern std::map<std::string, std::map<std::string, uintptr_t>> playerOffsets;
+extern std::map<std::string, DWORD> basicOffsets;
+extern std::map<std::string, std::map<std::string, DWORD>> playerOffsets;

@@ -1,18 +1,26 @@
-#include <map>
-#include <string>
+#include "../include/offsets.hpp"
 
-std::map<std::string, std::map<std::string, uintptr_t>> playerOffsets = {
+std::map<std::string, DWORD> basicOffsets = {
+    {"Entity", 0x18AC04},
+    {"NumOfPlayers", 0x18AC0C},
+    {"ViewMatrix", 0x17DFD0},
+    {"inst_change_viewy", 0xC2EC3},
+};
+
+std::map<std::string, std::map<std::string, DWORD>> playerOffsets = {
     //---------------------------#
     // Axis                      #
     //---------------------------#
     {"axis", {
-        {"posx", 0x2c},
-        {"posy", 0x28},
+        {"posx", 0x28},
+        {"posy", 0x2C},
         {"posz", 0x30},
+        {"headx", 0x4},
+        {"heady", 0x8},
+        {"headz", 0xc},
         {"viewx", 0x34},
         {"viewy", 0x38},
     }},
-    
     //---------------------------#
     // Weapons                   #
     //---------------------------#

@@ -6,10 +6,14 @@ void Cheat::godMode(int hp, int armor, int ammo) {
     memory.setPlayerArmor(armor);    
 }    
 
-void Cheat::setGravity(bool value) {
-    memory.setGravity(value);
+void Cheat::setGravity(bool active) {
+    memory.setGravity(active);
 }
 
-void Cheat::setRecoil(bool value) {
-    memory.setRecoil(value);
+void Cheat::setRecoil() {
+    memory.setRecoil();
+}
+
+void Cheat::setVallHack(bool active) {
+    memory.setVallHack(active);
 }

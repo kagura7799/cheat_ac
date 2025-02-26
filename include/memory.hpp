@@ -5,21 +5,34 @@
 #include <string>
 #include <TlHelp32.h>
 #include <vector>
+#include <iostream>
+#include <stdio.h>
+#include <stdlib.h>
 
 #include "../include/offsets.hpp" 
+#include "../include/esp/esp.hpp"
 
 class Memory {
 private:
     DWORD pid;
     HWND hwnd;
     HANDLE hProcess;
-    uintptr_t playerBase;
-    uintptr_t baseAddress;
+    DWORD playerBase;
+    DWORD baseAddress;
 
-    const std::map<std::string, uintptr_t>* weaponOffsets; 
-    const std::map<std::string, uintptr_t>* miscellaneousOffsets; 
+    const std::map<std::string, DWORD>* weaponOffsets;
+    const std::map<std::string, DWORD>* miscellaneousOffsets; 
 
     uintptr_t getModuleBaseAddress(DWORD pid, const std::wstring& moduleName);
+    void addHWNDtoVectors();
+
+    int Players;
+
+	float viewmatrix[16];
+    DWORD entityTemp;
+    DWORD entityPlayer; 
+    int enemyHealth;
+    char enemyName[20];
         
 public:
     Memory();
@@ -28,5 +41,6 @@ public:
     void setPlayerHp(int value);
     void setPlayerArmor(int value);
     void setGravity(bool value); 
-    void setRecoil(bool value);
+    void setRecoil();
+    void setWallHack(bool active);
 };
