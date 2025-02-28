@@ -27,20 +27,20 @@ void SetCursorPosition(int x, int y) {
 std::atomic<bool> godModeActive(false);
 std::atomic<bool> gravityActive(false);
 std::atomic<bool> recoilActive(false);
-std::atomic<bool> vallHackActive(false);
+std::atomic<bool> wallHackActive(false);
 
 std::map<std::string, bool> cheatTypes {
     {"GodMode", true},          
     {"Disable Gravity", true},  
     {"Disable Recoil", true},  
-    {"VallHack", true},  
+    {"WallHack", true},  
 };
 
 std::map<std::string, bool> cheatStatus {
     {"GodMode", false},
     {"Disable Gravity", false},
     {"Disable Recoil", false},
-    {"VallHack", false},  
+    {"WallHack", false},  
 };
 
 void drawMenu() {
@@ -48,10 +48,10 @@ void drawMenu() {
     std::cout << red << "========= ASSAULT CUBE CHEAT =========" << reset << std::endl;
     std::cout << "(by \"414 kagura\")" << std::endl;
     std::cout << "\n";
-    std::cout << "DISABLE GRAVITY - F1" << std::endl;
-    std::cout << "DISABLE RECOIL - F2" << std::endl;
-    std::cout << "GOD MODE - F3" << std::endl;
-    std::cout << "VALLHACK - F4" << std::endl;
+    std::cout << "Disable Gravity - F1" << std::endl;
+    std::cout << "Disable Recoil - F2" << std::endl;
+    std::cout << "God Mode - F3" << std::endl;
+    std::cout << "WallHack - F4" << std::endl;
     std::cout << std::endl;
 
     for (const auto& [cheat, status] : cheatStatus) {
@@ -88,13 +88,13 @@ void recoilLoop(Cheat& cheat) {
     }
 }
 
-void vallHackLoop(Cheat& cheat) {
-    while (vallHackActive) {
-        cheat.setVallHack(true);
+void WallHackLoop(Cheat& cheat) {
+    while (wallHackActive) {
+        cheat.setWallHack(true);
         Sleep(5);
     }
 
-    cheat.setVallHack(false);
+    cheat.setWallHack(false);
 }
 
 void handleKeyPresses(Cheat& cheat) {
@@ -137,12 +137,12 @@ void handleKeyPresses(Cheat& cheat) {
         }
 
         if (GetAsyncKeyState(VK_F4) & 0x8000) {
-            cheatStatus["VallHack"] = !cheatStatus["VallHack"];
-            if (cheatStatus["VallHack"]) {
-                vallHackActive = true;
-                std::thread(vallHackLoop, std::ref(cheat)).detach();
+            cheatStatus["WallHack"] = !cheatStatus["WallHack"];
+            if (cheatStatus["WallHack"]) {
+                wallHackActive = true;
+                std::thread(WallHackLoop, std::ref(cheat)).detach();
             } else {
-                vallHackActive = false;
+                wallHackActive = false;
             }
         }
 
