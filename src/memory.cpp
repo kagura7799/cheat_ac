@@ -23,8 +23,12 @@ uintptr_t Memory::getModuleBaseAddress(DWORD pid, const std::wstring& moduleName
 }
 
 Memory::Memory() {
-    hwnd = FindWindowA(NULL, "AssaultCube"); 
-    GetWindowThreadProcessId(hwnd, &pid);
+    hwnd = FindWindowA(NULL, "AssaultCube");
+
+    if (!GetWindowThreadProcessId(hwnd, &pid)) {
+        std::cerr << "[ERROR] Assault Cube not found" << std::endl;;
+        ExitProcess(1);
+    }
     
     hProcess = OpenProcess(PROCESS_ALL_ACCESS, FALSE, pid);
     if (hProcess != NULL) {
