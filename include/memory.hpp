@@ -24,7 +24,6 @@ private:
     const std::map<std::string, DWORD>* miscellaneousOffsets; 
 
     uintptr_t getModuleBaseAddress(DWORD pid, const std::wstring& moduleName);
-    void addHWNDtoVectors();
 
     int Players;
 

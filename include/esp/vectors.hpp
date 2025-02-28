@@ -25,11 +25,13 @@ typedef struct {
 } Vec2;
 
 extern Vec2 screen, Head;
-	
 extern Vec3 enemyB, enemyH;
 
+extern HWND hwnd;
 extern HDC htdc;
-
 extern HBRUSH Color;
 
-void setHWND(HWND hwnd);
+extern RECT windowSize;
+extern BOOL getWindowSize;
+
+void updateWindowSizeData();

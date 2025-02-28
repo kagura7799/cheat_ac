@@ -37,8 +37,6 @@ Memory::Memory() {
 
     weaponOffsets = &playerOffsets["weapon"];
     miscellaneousOffsets = &playerOffsets["miscellaneous"];
-
-    addHWNDtoVectors();
 }
 
 void Memory::setPlayerAmmo(int value) {
@@ -92,8 +90,4 @@ void Memory::setWallHack(bool active) {
             esp.WallHack(enemyB, enemyH, viewmatrix, enemyName, enemyHealth);
         }
     }
-}
-
-void Memory::addHWNDtoVectors() {
-    setHWND(hwnd);
 }

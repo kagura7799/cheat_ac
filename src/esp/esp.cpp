@@ -35,6 +35,8 @@ bool ESP::WorldToScreen(Vec3 pos, Vec2* screen, float matrix[16], int windowWidt
 }
 
 void ESP::WallHack(Vec3 EnemyPosition, Vec3 enemyHeadPos, float Matrix[16], char* enemyN, int enemyHealth) {
+	updateWindowSizeData();
+
 	if (WorldToScreen(EnemyPosition, &screen, Matrix, screenwidth, screenheight)) {
 		if (WorldToScreen(enemyHeadPos, &Head, Matrix, screenwidth, screenheight)) {
 			float height = (Head.y - 55.0f) - screen.y;
