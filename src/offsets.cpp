@@ -1,13 +1,15 @@
 #include "../include/offsets.hpp"
 
-std::map<std::string, DWORD> basicOffsets = {
+std::map<std::string, DWORD> basicOffsets = 
+{
     {"Entity", 0x18AC04},
     {"NumOfPlayers", 0x18AC0C},
     {"ViewMatrix", 0x17DFD0},
     {"inst_change_viewy", 0xC2EC3},
 };
 
-std::map<std::string, std::map<std::string, DWORD>> playerOffsets = {
+std::map<std::string, std::map<std::string, DWORD>> entityOffsets = 
+{
     //---------------------------#
     // Axis                      #
     //---------------------------#

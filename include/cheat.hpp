@@ -6,7 +6,8 @@
 
 #include "../include/memory.hpp"
 
-class Cheat {
+class Cheat
+{
 public:
     Memory memory;
 
@@ -14,4 +15,5 @@ public:
     void setGravity(bool active);
     void setRecoil();
     void setWallHack(bool active);
+    void setAimBot(bool active);
 };

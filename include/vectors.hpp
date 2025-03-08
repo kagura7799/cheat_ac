@@ -12,20 +12,35 @@
 extern int screenwidth;
 extern int screenheight;
 
-typedef struct {
-	float x, y, z, w; 
+typedef struct
+{
+	float x, y, z, w;
 } Vec4;
 
-typedef struct {
+struct Vec3
+{
 	float x, y, z;
-} Vec3;
 
-typedef struct {
-	float x, y; 
+	Vec3 operator-(const Vec3 &other) const
+	{
+		return {x - other.x, y - other.y, z - other.z};
+	}
+};
+
+struct Angles
+{
+	float pitch, yaw;
+};
+
+typedef struct
+{
+	float x, y;
 } Vec2;
 
 extern Vec2 screen, Head;
+
 extern Vec3 enemyB, enemyH;
+extern Vec3 playerB, playerH;
 
 extern HWND hwnd;
 extern HDC htdc;

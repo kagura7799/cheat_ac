@@ -6,7 +6,7 @@ void DrawFilledRect(HDC htdc, int x, int y, int w, int h, HBRUSH color) {
     FillRect(htdc, &rect, color);
 }
 
-void DrawBorderBox(HDC htdc, HBRUSH Color, int x, int y, int w, int h, int thickness, const wchar_t* text, const wchar_t* text2) {
+void DrawBorderBox(HDC htdc, HBRUSH Color, int x, int y, int w, int h, int thickness, const wchar_t* text) {
 
 	DrawFilledRect(htdc, x + 2, y, w - 2, thickness, Color);
 	DrawFilledRect(htdc, x, y, thickness, h, Color); 
@@ -19,5 +19,5 @@ void DrawBorderBox(HDC htdc, HBRUSH Color, int x, int y, int w, int h, int thick
 	RECT enemyN = { x, y + h, x + w, y };
 	RECT enemyHealth = { x, y - 20, x + w, y };
  
-	DrawTextW(htdc, text2, -1, &enemyHealth, DT_CENTER | DT_TOP | DT_SINGLELINE);
+	DrawTextW(htdc, text, -1, &enemyHealth, DT_CENTER | DT_TOP | DT_SINGLELINE);
 }
