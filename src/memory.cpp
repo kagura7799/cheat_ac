@@ -82,14 +82,15 @@ void Memory::setRecoil()
 
 void Memory::setEntityProperties(DWORD entityAddress)
 {
-    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["posx"]), &g_entity.enemyB.x, sizeof(float), NULL);
-    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["posy"]), &g_entity.enemyB.y, sizeof(float), NULL);
-    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["posz"]), &g_entity.enemyB.z, sizeof(float), NULL);
-    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["headx"]), &g_entity.enemyH.x, sizeof(float), NULL);
-    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["heady"]), &g_entity.enemyH.y, sizeof(float), NULL);
-    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["headz"]), &g_entity.enemyH.z, sizeof(float), NULL);
-
     ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["miscellaneous"]["hp"]), &g_entity.hp, sizeof(int), NULL);
+    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["miscellaneous"]["team"]), &g_entity.team, sizeof(int), NULL);
+
+    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["posx"]), &g_entity.bodyPos.x, sizeof(float), NULL);
+    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["posy"]), &g_entity.bodyPos.y, sizeof(float), NULL);
+    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["posz"]), &g_entity.bodyPos.z, sizeof(float), NULL);
+    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["headx"]), &g_entity.headPos.x, sizeof(float), NULL);
+    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["heady"]), &g_entity.headPos.y, sizeof(float), NULL);
+    ReadProcessMemory(hProcess, (LPCVOID)(entityAddress + entityOffsets["axis"]["headz"]), &g_entity.headPos.z, sizeof(float), NULL);
 }
 
 void Memory::setWallHack(bool active)
@@ -106,10 +107,10 @@ void Memory::setWallHack(bool active)
 
             setEntityProperties(entityEnemy);
 
-            if (enemyHealth < 0)
+            if (g_entity.hp < 0 || g_entity.team == g_player.team)
                 continue;
 
-            esp.WallHack(g_entity.enemyB, g_entity.enemyH, viewmatrix, g_entity.hp);
+            esp.WallHack(g_entity.bodyPos, g_entity.headPos, viewmatrix, g_entity.hp);
         }
     }
 }
@@ -120,21 +121,23 @@ void Memory::setAimBot(bool active)
     {
         Angles currentViewAngles;
 
+        ReadProcessMemory(hProcess, (LPCVOID)(playerBase + entityOffsets["axis"]["headx"]), &playerH.x, sizeof(float), NULL);
+        ReadProcessMemory(hProcess, (LPCVOID)(playerBase + entityOffsets["axis"]["heady"]), &playerH.y, sizeof(float), NULL);
+        ReadProcessMemory(hProcess, (LPCVOID)(playerBase + entityOffsets["axis"]["headz"]), &playerH.z, sizeof(float), NULL);
+
         for (int i = 1; i < countOfPlayers; i++)
         {
-            ReadProcessMemory(hProcess, (LPCVOID)(playerBase + entityOffsets["axis"]["headx"]), &playerH.x, sizeof(float), NULL);
-            ReadProcessMemory(hProcess, (LPCVOID)(playerBase + entityOffsets["axis"]["heady"]), &playerH.y, sizeof(float), NULL);
-            ReadProcessMemory(hProcess, (LPCVOID)(playerBase + entityOffsets["axis"]["headz"]), &playerH.z, sizeof(float), NULL);
+            ReadProcessMemory(hProcess, (LPCVOID)(playerBase + entityOffsets["miscellaneous"]["team"]), &g_player.team, sizeof(int), NULL);
 
             ReadProcessMemory(hProcess, (LPCVOID)(baseAddress + basicOffsets["Entity"]), &entityPtr, sizeof(DWORD), NULL);
             ReadProcessMemory(hProcess, (LPCVOID)(entityPtr + i * 0x4), &entityEnemy, sizeof(DWORD), NULL);
 
             setEntityProperties(entityEnemy);
 
-            if (g_entity.hp < 0)
+            if (g_entity.hp < 0 || g_entity.team == g_player.team)
                 continue;
 
-            Angles targetAngles = CalcAngle(playerH, g_entity.enemyH);
+            Angles targetAngles = CalcAngle(playerH, g_entity.headPos);
 
             WriteProcessMemory(hProcess, (LPVOID)(playerBase + entityOffsets["axis"]["viewx"]), &targetAngles.yaw, sizeof(float), NULL);
             WriteProcessMemory(hProcess, (LPVOID)(playerBase + entityOffsets["axis"]["viewy"]), &targetAngles.pitch, sizeof(float), NULL);

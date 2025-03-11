@@ -15,11 +15,17 @@
 
 #define M_PI 3.14159265358979323846
 
+struct Player 
+{
+    int team;
+};
+
 struct Entity
 {
     int hp;
-    Vec3 enemyB;
-    Vec3 enemyH;
+    int team;
+    Vec3 bodyPos;
+    Vec3 headPos;
 };
 
 class Memory
@@ -52,6 +58,7 @@ public:
     Memory();
 
     Entity g_entity;
+    Player g_player;
 
     void setPlayerAmmo(int value);
     void setPlayerHp(int value);

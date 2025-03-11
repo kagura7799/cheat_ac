@@ -42,6 +42,7 @@ std::map<std::string, std::map<std::string, DWORD>> entityOffsets =
         {"name", 0x205},
         {"hp", 0xec},
         {"armor", 0xF0},
+        {"team", 0x30C},
         {"is_onground", 0x5d},
         {"is_shooting", 0x204},
     }},
